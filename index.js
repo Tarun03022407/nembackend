@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors")
 // const jwt = require("jsonwebtoken");
 // const bcrypt=require("bcrypt")
 const {authenticate} = require("./middlewares/authenticate.middleware")
@@ -7,14 +8,17 @@ const {authenticate} = require("./middlewares/authenticate.middleware")
 const {userRouter}=require("./routes/user.routes")
 const {noteRouter} =require("./routes/Note.route")
 app.use(express.json());
+app.use(cors({
+  origin: '*'
+}));
 const { connection } = require("./configs/db");
 app.use("/users",userRouter)
 // const { UserModel } = require("./models/users.model");
+app.use(authenticate)
+app.use("/notes",noteRouter)
 app.use('/',(req,res)=>{
   res.send("homepage")
 })
-app.use(authenticate)
-app.use("/notes",noteRouter)
 
 
 
