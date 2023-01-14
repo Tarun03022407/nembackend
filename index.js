@@ -10,8 +10,12 @@ app.use(express.json());
 const { connection } = require("./configs/db");
 app.use("/users",userRouter)
 // const { UserModel } = require("./models/users.model");
+app.use('/',(req,res)=>{
+  res.send("homepage")
+})
 app.use(authenticate)
 app.use("/notes",noteRouter)
+
 
 
 app.listen(process.env.port, async () => {
